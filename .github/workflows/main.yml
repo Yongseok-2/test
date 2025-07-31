@@ -1,0 +1,26 @@
+name: Compile Java on master push
+
+on:
+  push:
+    branches:
+      - master  # master 브랜치에 push될 때만 실행
+
+jobs:
+  build-java:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'  # Java 17 설치
+
+      - name: Compile Main.java
+        run: javac Main.java
+
+      - name: Check that Main.class was created
+        run: ls -l Main.class
